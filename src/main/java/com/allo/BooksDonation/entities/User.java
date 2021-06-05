@@ -3,6 +3,7 @@ package com.allo.BooksDonation.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -30,6 +31,7 @@ public class User {
     @Column(name = "PHONE")
     private String phone;
 
-    @OneToMany(mappedBy="id")
+    @OneToMany(mappedBy="id", fetch = FetchType.LAZY)
+    @Column(nullable = false)
     private List<Adress> adress;
 }
