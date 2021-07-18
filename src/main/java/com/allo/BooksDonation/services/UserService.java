@@ -15,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found"));
+        return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found."));
     }
 
     public User createUser(User user) {
@@ -39,11 +39,11 @@ public class UserService {
 
     public void createUserValidation(User user){
         if(userRepository.findByUsername(user.getUsername()) != null){
-            throw new ObjectAlreadyExistsException("User already exists. User:" + user.getUsername());
+            throw new ObjectAlreadyExistsException("User already exists. User: " + user.getUsername());
         }
 
         if(userRepository.findByEmail(user.getEmail()) != null){
-            throw new ObjectAlreadyExistsException("Email already exists. Email:" + user.getEmail());
+            throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
         }
     };
 

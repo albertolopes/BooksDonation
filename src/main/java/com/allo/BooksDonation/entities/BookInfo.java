@@ -1,5 +1,6 @@
 package com.allo.BooksDonation.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,15 +43,16 @@ public class BookInfo {
     @Column(name = "TEXT_SNIPPET")
     private String textSnippet;
 
-    @OneToOne(mappedBy="book")
+    @OneToOne(mappedBy="book", cascade = CascadeType.ALL)
     private ImageLinks imageLinks;
 
-    @ElementCollection
-    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "AUTHORS")
-    private List<String> authors;
-
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "bookId")
     private Book book;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "AUTHORS")
+    @MapKey(name = "id_authors")
+    private List<String> authors;
 }

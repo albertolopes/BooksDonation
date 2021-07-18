@@ -21,7 +21,7 @@ public class ImageLinks {
 
     private String thumbnail;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
 }

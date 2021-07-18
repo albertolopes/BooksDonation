@@ -1,8 +1,11 @@
 package com.allo.BooksDonation.entities;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -10,15 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Book {
+public class Book implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "UUID_BOOK")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_BOOK")
+    private Long bookId;
 
     @Column(name = "SELF_LINK")
     private String selfLink;
 
-    @OneToOne(mappedBy="book")
-    private BookInfo volumeInfo;
+    @OneToOne(mappedBy="book", cascade = CascadeType.ALL)
+    private BookInfo bookInfo;
 }
