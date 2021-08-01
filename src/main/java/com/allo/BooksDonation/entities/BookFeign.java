@@ -17,6 +17,5 @@ public class BookFeign {
 
     private String kind;
 
-    @JsonIgnore
     private List<Book> items;
 }

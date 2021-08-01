@@ -1,9 +1,9 @@
 package com.allo.BooksDonation.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
@@ -11,12 +11,19 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Donation {
+public class Donation implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_DONATION")
-    private Long donationId;
+    private Long id;
 
-    @EmbeddedId
-    private DonationPK info = new DonationPK();
+    @ManyToOne
+    @JoinColumn(name="ID_USER")
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bookId")
+    private Book book;
 }

@@ -22,5 +22,5 @@ public class UserDTO implements Serializable {
 
     private String phone;
 
-    private List<Adress> adress;
+    //private List<Adress> adress;
 }

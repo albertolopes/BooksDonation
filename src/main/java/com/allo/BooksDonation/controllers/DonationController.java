@@ -1,5 +1,6 @@
 package com.allo.BooksDonation.controllers;
 
+import com.allo.BooksDonation.dtos.DonationDTO;
 import com.allo.BooksDonation.entities.Donation;
 import com.allo.BooksDonation.services.DonationService;
 import io.swagger.annotations.Api;
@@ -21,7 +22,7 @@ public class DonationController {
 
     @PostMapping
     @ApiOperation("Create a new donation")
-    public ResponseEntity<Donation> createDonation(@RequestBody Donation donation){
+    public ResponseEntity<DonationDTO> createDonation(@RequestBody DonationDTO donation){
         return ResponseEntity.ok(service.createDonation(donation));
     }
 }

@@ -1,11 +1,9 @@
 package com.allo.BooksDonation.entities;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -24,6 +22,7 @@ public class Book implements Serializable {
     @Column(name = "SELF_LINK")
     private String selfLink;
 
-    @OneToOne(mappedBy="book", cascade = CascadeType.ALL)
-    private BookInfo bookInfo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_BOOK_INFO")
+    private BookInfo volumeInfo;
 }

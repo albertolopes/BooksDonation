@@ -1,9 +1,15 @@
 package com.allo.BooksDonation.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -16,7 +22,7 @@ public class BookInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_BOOK_USER")
+    @Column(name = "ID_BOOK_INFO")
     private Long id;
 
     @Column(name = "TITLE")
@@ -43,16 +49,31 @@ public class BookInfo {
     @Column(name = "TEXT_SNIPPET")
     private String textSnippet;
 
-    @OneToOne(mappedBy="book", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_IMAGE_LINKS")
     private ImageLinks imageLinks;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "bookId")
-    private Book book;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "AUTHORS")
-    @MapKey(name = "id_authors")
-    private List<String> authors;
+//    @ElementCollection//(fetch = FetchType.EAGER)
+//    //@CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "userId"))
+//    //@JoinTable(name = "AUTHORS")
+////    @MapKey(name = "id")
+//    @JoinTable(name="AUTHORS",joinColumns=@JoinColumn(name="ID_BOOK"))
+//    @GenericGenerator(name="hilo-generator",strategy="hilo")
+//    @CollectionId(columns={@Column(name="ID")},generator="hilo-generator",type=@Type(type="long"))
+//    private List<String> authors;
+
+//    @ElementCollection
+//    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "userId"))
+//    @Column(name = "AUTHORS")
+//    private List<String> authors;
+
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @JoinTable(name = "AUTHORS")
+//    @MapKey(name = "id_authors")
+    @ElementCollection
+    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "ID_AUTHORS"))
+    //@Column(name = "AUTHORS")
+    //@JoinColumn(name = "ID_AUTHORS")
+    private List<String> authors = new ArrayList<>();
 }

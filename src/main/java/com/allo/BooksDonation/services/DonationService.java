@@ -1,6 +1,7 @@
 package com.allo.BooksDonation.services;
 
-import com.allo.BooksDonation.entities.Donation;
+import com.allo.BooksDonation.dtos.DonationDTO;
+import com.allo.BooksDonation.mappers.*;
 import com.allo.BooksDonation.repositories.DonationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,13 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 public class DonationService {
 
-    private final DonationRepository repository;
-
     private final BookService bookService;
+    private final DonationRepository repository;
+    private final DonationMapper donationMapper;
+    private final UserMapper userMapper;
 
     @Transactional
-    public Donation createDonation(Donation donation) {
-        bookService.saveBook(donation.getInfo().getBook());
-        return repository.save(donation);
+    public DonationDTO createDonation(DonationDTO dto) {
+        return donationMapper.toDto(repository.save(donationMapper.toEntity(dto)));
     }
 }
