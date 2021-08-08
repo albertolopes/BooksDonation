@@ -1,16 +1,9 @@
 package com.allo.BooksDonation.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
-import org.hibernate.annotations.CollectionId;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -53,27 +46,9 @@ public class BookInfo {
     @JoinColumn(name = "ID_IMAGE_LINKS")
     private ImageLinks imageLinks;
 
-
-//    @ElementCollection//(fetch = FetchType.EAGER)
-//    //@CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "userId"))
-//    //@JoinTable(name = "AUTHORS")
-////    @MapKey(name = "id")
-//    @JoinTable(name="AUTHORS",joinColumns=@JoinColumn(name="ID_BOOK"))
-//    @GenericGenerator(name="hilo-generator",strategy="hilo")
-//    @CollectionId(columns={@Column(name="ID")},generator="hilo-generator",type=@Type(type="long"))
-//    private List<String> authors;
-
-//    @ElementCollection
-//    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "userId"))
-//    @Column(name = "AUTHORS")
-//    private List<String> authors;
-
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @JoinTable(name = "AUTHORS")
-//    @MapKey(name = "id_authors")
     @ElementCollection
-    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "ID_AUTHORS"))
-    //@Column(name = "AUTHORS")
-    //@JoinColumn(name = "ID_AUTHORS")
-    private List<String> authors = new ArrayList<>();
+    @CollectionTable(name = "AUTHORS",
+            joinColumns = @JoinColumn(name = "ID_AUTHORS"))
+    @Column(name = "AUTHORS")
+    private Set<String> authors = new HashSet<>();
 }
