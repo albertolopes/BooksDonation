@@ -1,5 +1,7 @@
 package com.allo.BooksDonation.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,11 +19,9 @@ public class ImageLinks {
     @Column(name = "ID_IMAGE_LINKS")
     private Long id;
 
+    @Column(name = "SMALL_THUMBNAIL")
     private String smallThumbnail;
 
+    @Column(name = "THUMBNAIL")
     private String thumbnail;
-
-    @OneToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
 }

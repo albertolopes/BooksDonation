@@ -3,7 +3,7 @@ package com.allo.BooksDonation.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -15,7 +15,7 @@ public class BookInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_BOOK_USER")
+    @Column(name = "ID_BOOK_INFO")
     private Long id;
 
     @Column(name = "TITLE")
@@ -42,15 +42,13 @@ public class BookInfo {
     @Column(name = "TEXT_SNIPPET")
     private String textSnippet;
 
-    @OneToOne(mappedBy="book")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_IMAGE_LINKS")
     private ImageLinks imageLinks;
 
     @ElementCollection
-    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "id"))
+    @CollectionTable(name = "AUTHORS",
+            joinColumns = @JoinColumn(name = "ID_AUTHORS"))
     @Column(name = "AUTHORS")
-    private List<String> authors;
-
-    @OneToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
+    private Set<String> authors = new HashSet<>();
 }
