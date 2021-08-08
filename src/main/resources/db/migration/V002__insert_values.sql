@@ -40,8 +40,11 @@ values (
     1
 );
 
-insert into donation (id_donation, book_id, id_user)
-values (null, 1, 1);
+insert into donation (id_donation, status, book_id, id_user)
+values (null, 2, 1, 1);
 
 insert into authors (id_authors, authors)
 values (1, 'Douglas Adams');
+
+insert into categories (id_categories, categories)
+values (1, 'Fiction');

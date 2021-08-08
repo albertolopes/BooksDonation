@@ -3,13 +3,15 @@ package com.allo.BooksDonation.dtos;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EqualsAndHashCode
+@EqualsAndHashCode
 public class BookInfoDTO {
 
     private Long id;
@@ -32,7 +34,7 @@ public class BookInfoDTO {
 
     private ImageLinksDTO imageLinks;
 
-    //private BookDTO book;
+    private Set<String> authors = new HashSet<>();
 
-    private List<String> authors = new ArrayList<>();
+    private Set<String> categories = new HashSet<>();
 }

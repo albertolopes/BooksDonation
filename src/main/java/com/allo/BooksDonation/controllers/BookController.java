@@ -1,10 +1,9 @@
 package com.allo.BooksDonation.controllers;
 
-import com.allo.BooksDonation.entities.BookFeign;
+import com.allo.BooksDonation.dtos.BookFeignDTO;
 import com.allo.BooksDonation.services.BookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class BookController {
 
     @GetMapping("/{description}")
     @ApiOperation("Find a book for any description")
-    public ResponseEntity<BookFeign> searchBook(@PathVariable String description){
+    public ResponseEntity<BookFeignDTO> searchBook(@PathVariable String description){
         return ResponseEntity.ok(service.searchBook(description));
     }
 }

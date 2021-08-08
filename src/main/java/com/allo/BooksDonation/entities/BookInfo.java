@@ -47,8 +47,12 @@ public class BookInfo {
     private ImageLinks imageLinks;
 
     @ElementCollection
-    @CollectionTable(name = "AUTHORS",
-            joinColumns = @JoinColumn(name = "ID_AUTHORS"))
+    @CollectionTable(name = "CATEGORIES", joinColumns = @JoinColumn(name = "ID_CATEGORIES"))
+    @Column(name = "CATEGORIES")
+    private Set<String> categories = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "AUTHORS", joinColumns = @JoinColumn(name = "ID_AUTHORS"))
     @Column(name = "AUTHORS")
     private Set<String> authors = new HashSet<>();
 }
