@@ -31,4 +31,28 @@ public class DonationController {
     public ResponseEntity<DonateStatus> changeStatus(@PathVariable Long idDonation, @PathVariable String status){
         return ResponseEntity.ok(service.changeStatus(idDonation, status));
     }
+
+    @GetMapping("/{idDonation}")
+    @ApiOperation("Find a donation")
+    public ResponseEntity<DonationDTO> findADonation(@PathVariable Long idDonation){
+        return ResponseEntity.ok(service.findADonarion(idDonation));
+    }
+
+    @GetMapping("/author/{author}")
+    @ApiOperation("Find a donation by author")
+    public ResponseEntity<List<DonationDTO>> findByAuthor(@PathVariable String author){
+        return ResponseEntity.ok(service.findByAuthor(author));
+    }
+
+    @GetMapping("/categories/{categories}")
+    @ApiOperation("Find a donation by categories")
+    public ResponseEntity<List<DonationDTO>> findByCategories(@PathVariable String categories){
+        return ResponseEntity.ok(service.findByCategories(categories));
+    }
+
+    @GetMapping("/title/{title}")
+    @ApiOperation("Find a donation by categories")
+    public ResponseEntity<List<DonationDTO>> findByTitle(@PathVariable String title){
+        return ResponseEntity.ok(service.findByTitle(title));
+    }
 }

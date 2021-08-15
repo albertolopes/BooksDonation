@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -31,5 +32,22 @@ public class DonationService {
         donation.setStatus(DonateStatus.valueOf(status));
         repository.save(donation);
         return donation.getStatus();
+    }
+
+    public DonationDTO findADonarion(Long idDonation) {
+        Donation donation = repository.findById(idDonation).orElseThrow(() -> new ObjectNotFoundException("Donation not found"));
+        return donationMapper.toDto(donation);
+    }
+
+    public List<DonationDTO> findByAuthor(String author) {
+        return donationMapper.toDto(repository.findByAuthor(author));
+    }
+
+    public List<DonationDTO> findByCategories(String categories) {
+        return donationMapper.toDto(repository.findByCategories(categories));
+    }
+
+    public List<DonationDTO> findByTitle(String title) {
+        return donationMapper.toDto(repository.findByTitle(title));
     }
 }

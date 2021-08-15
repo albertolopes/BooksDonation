@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class AdressDTO implements Serializable {
+public class AddressDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long Id;
@@ -26,6 +26,4 @@ public class AdressDTO implements Serializable {
     private String localidade;
 
     private String uf;
-
-    private User user;
 }

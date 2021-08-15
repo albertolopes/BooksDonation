@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "addressClient", url = "https://www.googleapis.com/")
+@FeignClient(name = "bookClient", url = "https://www.googleapis.com/")
 public interface BookClient {
 
     @GetMapping("books/v1/volumes?q={description}")
