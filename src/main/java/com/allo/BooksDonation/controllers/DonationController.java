@@ -38,21 +38,13 @@ public class DonationController {
         return ResponseEntity.ok(service.findADonarion(idDonation));
     }
 
-    @GetMapping("/author/{author}")
+    @GetMapping("/filter/{author}/{categories}/{title}")
     @ApiOperation("Find a donation by author")
-    public ResponseEntity<List<DonationDTO>> findByAuthor(@PathVariable String author){
-        return ResponseEntity.ok(service.findByAuthor(author));
-    }
-
-    @GetMapping("/categories/{categories}")
-    @ApiOperation("Find a donation by categories")
-    public ResponseEntity<List<DonationDTO>> findByCategories(@PathVariable String categories){
-        return ResponseEntity.ok(service.findByCategories(categories));
-    }
-
-    @GetMapping("/title/{title}")
-    @ApiOperation("Find a donation by categories")
-    public ResponseEntity<List<DonationDTO>> findByTitle(@PathVariable String title){
-        return ResponseEntity.ok(service.findByTitle(title));
+    public ResponseEntity<List<DonationDTO>> findByBook(
+            @PathVariable String author,
+            @PathVariable String categories,
+            @PathVariable String title
+    ){
+        return ResponseEntity.ok(service.findByBook(author, categories , title));
     }
 }

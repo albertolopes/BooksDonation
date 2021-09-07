@@ -11,24 +11,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-//    @Value("${spring.application.name}")
-//    private String nomeProjeto;
 
-//    @Bean
-//    public Docket apiV1() {
-//        return criarDocket("v1");
-//    }
-//
-//    @Bean
-//    public Docket apiV2() {
-//        return criarDocket("v2");
-//    }
 
     public Docket criarDocket(String apiVersion) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.allo.BooksDonation.controllers"))
-//                .paths(PathSelectors.regex("/" + apiVersion + "/.*"))
                 .build()
                 .groupName(apiVersion)
                 .apiInfo(apiInfo());
@@ -39,13 +27,4 @@ public class SwaggerConfig {
                 .title("Books")
                 .build();
     }
-
-
-//    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//
-//        registry.addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-//    }
 }

@@ -24,7 +24,7 @@ public class BookController {
         return ResponseEntity.ok(service.searchBook(description));
     }
 
-    @GetMapping("/{categories}")
+    @GetMapping("/categories")
     @ApiOperation("Find all categories")
     public ResponseEntity<List<String>> findAllCategories(){
         return ResponseEntity.ok(service.findAllCategories());

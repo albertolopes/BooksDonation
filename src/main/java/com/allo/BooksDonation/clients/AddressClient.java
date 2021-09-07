@@ -1,4 +1,4 @@
-package com.allo.BooksDonation.client;
+package com.allo.BooksDonation.clients;
 
 import com.allo.BooksDonation.dtos.AddressDTO;
 import org.springframework.cloud.openfeign.FeignClient;

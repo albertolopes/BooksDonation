@@ -12,35 +12,16 @@ import java.util.UUID;
 public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     @Query(
-        nativeQuery = true,
-        value = "SELECT * FROM authors\n" +
-                "INNER JOIN book_info ON (book_info.id_book_info = authors.id_authors)\n" +
-                "INNER JOIN book ON (book.id_book_info = book_info.id_book_info)\n" +
-                "INNER JOIN donation ON (donation.book_id = book.id_book)\n" +
-                "WHERE LOWER(authors.authors) ~ LOWER( :author )"
-    )
-    List<Donation> findByAuthor(String author);
-
-    @Query(
-            nativeQuery = true,
-            value = "SELECT * FROM categories \n" +
-                    "INNER JOIN book_info ON (book_info.id_book_info = categories.id_categories)\n" +
-                    "INNER JOIN book ON (book.id_book_info = book_info.id_book_info)\n" +
-                    "INNER JOIN donation ON (donation.book_id = book.id_book)\n" +
-                    "WHERE LOWER(categories.categories) ~ LOWER( :categories )"
-    )
-    List<Donation> findByCategories(String categories);
-
-    @Query(
             nativeQuery = true,
             value = "SELECT * FROM book_info \n" +
+                    "FULL OUTER JOIN authors ON (authors.id_authors = book_info.id_book_info)\n" +
+                    "FULL OUTER JOIN categories ON (categories.id_categories = book_info.id_book_info) \n" +
+                    "FULL OUTER JOIN book ON (book.id_book_info = book_info.id_book_info)\n" +
+                    "FULL OUTER JOIN donation ON (donation.book_id = book.id_book)\n" +
                     "\n" +
-                    "INNER JOIN authors ON (authors.id_authors = book_info.id_book_info)\n" +
-                    "INNER JOIN categories ON (categories.id_categories = book_info.id_book_info)\n" +
-                    "INNER JOIN book ON (book.id_book_info = book_info.id_book_info)\n" +
-                    "INNER JOIN donation ON (donation.book_id = book.id_book)\n" +
-
-                    "WHERE LOWER(book_info.title) ~ LOWER( :title )"
+                    "WHERE LOWER(book_info.title) ~ LOWER( :author ) \n" +
+                    "OR LOWER(categories.categories) ~ LOWER( :categories ) \n" +
+                    "OR LOWER(authors.authors) ~ LOWER( :title ) "
     )
-    List<Donation> findByTitle(String title);
+    List<Donation> findByBook(String author, String categories, String title);
 }

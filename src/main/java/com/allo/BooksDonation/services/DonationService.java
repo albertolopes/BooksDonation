@@ -39,15 +39,7 @@ public class DonationService {
         return donationMapper.toDto(donation);
     }
 
-    public List<DonationDTO> findByAuthor(String author) {
-        return donationMapper.toDto(repository.findByAuthor(author));
-    }
-
-    public List<DonationDTO> findByCategories(String categories) {
-        return donationMapper.toDto(repository.findByCategories(categories));
-    }
-
-    public List<DonationDTO> findByTitle(String title) {
-        return donationMapper.toDto(repository.findByTitle(title));
+    public List<DonationDTO> findByBook(String author, String categories, String title) {
+        return donationMapper.toDto(repository.findByBook(author, categories, title));
     }
 }
