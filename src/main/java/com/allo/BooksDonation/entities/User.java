@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -38,7 +39,7 @@ public class User {
     @Column(nullable = false)
     private List<Address> adress;
 
-    @ElementCollection(targetClass = Roles.class)
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "ID_ROLES"))
     @Column(name = "roles", nullable = false)
     @Enumerated(EnumType.ORDINAL)

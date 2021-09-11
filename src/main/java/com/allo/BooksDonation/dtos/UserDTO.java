@@ -1,8 +1,11 @@
 package com.allo.BooksDonation.dtos;
 
+import com.allo.BooksDonation.entities.enums.Roles;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -19,4 +22,8 @@ public class UserDTO implements Serializable {
     private String email;
 
     private String phone;
+
+    private String password;
+
+    private Set<Roles> roles = new HashSet<>();
 }

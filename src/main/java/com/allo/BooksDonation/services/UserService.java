@@ -2,6 +2,7 @@ package com.allo.BooksDonation.services;
 
 import com.allo.BooksDonation.dtos.UpdatePasswordDTO;
 import com.allo.BooksDonation.entities.User;
+import com.allo.BooksDonation.entities.enums.Roles;
 import com.allo.BooksDonation.exceptions.ObjectAlreadyExistsException;
 import com.allo.BooksDonation.exceptions.ObjectNotFoundException;
 import com.allo.BooksDonation.repositories.UserRepository;
@@ -9,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class UserService {
@@ -25,6 +28,7 @@ public class UserService {
 
     public User createUser(User user) {
         user.setPassword(bCrypt.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(Roles.USER));
         createUserValidation(user);
         return userRepository.save(user);
     }

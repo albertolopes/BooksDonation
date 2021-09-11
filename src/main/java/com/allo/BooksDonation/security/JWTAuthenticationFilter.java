@@ -34,14 +34,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse res) {
         try {
             CredentialDTO credential = new ObjectMapper()
-                    .readValue(req.getInputStream(), CredentialDTO.class);
+                .readValue(req.getInputStream(), CredentialDTO.class);
+
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    credential.getUsername(),
-                    credential.getPassword(),
-                    new ArrayList<>()
+                credential.getUsername(),
+                credential.getPassword(),
+                new ArrayList<>()
             );
-            Authentication auth = authenticationManager.authenticate((Authentication) authToken);
-            return auth;
+
+            return authenticationManager.authenticate((Authentication) authToken);
         } catch (IOException e){
             throw new RuntimeException(e);
         }
@@ -56,7 +57,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = jwtUtil.generateToken(nome);
         res.addHeader("Authorization", "Bearer " + token);
         res.setContentType("application/json");
-        res.getWriter().append("Bearer " + token);
     }
 
     private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -73,8 +73,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             long date = new Date().getTime();
             return "{\"timestamp\": " + date + ", "
                     + "\"status\": 401, "
-                    + "\"error\": \"Não autorizado\", "
-                    + "\"message\": \"Usuario ou senha inválidos\", "
+                    + "\"error\": \"Not authorized\", "
+                    + "\"message\": \"Invalid credentials\", "
                     + "\"path\": \"/login\"}";
         }
     }

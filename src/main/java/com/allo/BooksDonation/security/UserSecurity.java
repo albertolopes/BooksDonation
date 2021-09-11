@@ -28,12 +28,16 @@ public class UserSecurity implements UserDetails {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());
+        this.authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getDescription())).collect(Collectors.toList());
+    }
+
+    public Long getId(){
+        return id;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
@@ -66,7 +70,7 @@ public class UserSecurity implements UserDetails {
         return true;
     }
 
-    public boolean hasRole(Roles perfil){
-        return getAuthorities().contains(new SimpleGrantedAuthority(perfil.toString()));
+    public boolean hasRole(Roles roles){
+        return getAuthorities().contains(new SimpleGrantedAuthority(roles.getDescription()));
     }
 }
