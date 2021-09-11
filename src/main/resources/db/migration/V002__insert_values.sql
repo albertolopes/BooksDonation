@@ -1,6 +1,9 @@
 insert into users (id_user, email, password, phone, username)
 values (1, 'livros@mail.com', 'livros', '999999999', 'livros');
 
+insert into roles(id_roles, roles)
+values (1, 0);
+
 insert into image_links (id_image_links, small_thumbnail, thumbnail)
 values (
     1,
