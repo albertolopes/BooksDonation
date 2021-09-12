@@ -47,19 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/user",
-            "/auth/forgot/**"
+            "/auth/forgot/**",
+            "Login"
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-
-    };
-
-    private static final String[] PUBLIC_MATCHERS_DELETE= {
-
-    };
-
-    private static final String[] PUBLIC_MATCHERS_PUT = {
-
+            "/donation/{idDonation}",
+            "/donation/filter/{author}/{categories}/{title}",
     };
 
     @Override

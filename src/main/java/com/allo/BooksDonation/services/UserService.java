@@ -3,10 +3,11 @@ package com.allo.BooksDonation.services;
 import com.allo.BooksDonation.dtos.UpdatePasswordDTO;
 import com.allo.BooksDonation.entities.User;
 import com.allo.BooksDonation.entities.enums.Roles;
+import com.allo.BooksDonation.exceptions.AuthorizationException;
 import com.allo.BooksDonation.exceptions.ObjectAlreadyExistsException;
 import com.allo.BooksDonation.exceptions.ObjectNotFoundException;
 import com.allo.BooksDonation.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import com.allo.BooksDonation.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class UserService {
     private BCryptPasswordEncoder bCrypt;
 
     public User findById(Long id) {
+
         return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found."));
     }
 
@@ -34,15 +36,21 @@ public class UserService {
     }
 
     public User updateUser(User user) {
+        verificaUsuarioLogado(user.getId());
 
         updateUserValidation(user);
+
         user.setPassword(findById(user.getId()).getPassword());
+
         return userRepository.save(user);
     }
 
     public String updatePassword(UpdatePasswordDTO dto){
+        verificaUsuarioLogado(dto.getId());
+
         User currentUser = findById(dto.getId());
-        currentUser.setPassword(dto.getPassword());
+
+        currentUser.setPassword(bCrypt.encode(dto.getPassword()));
         userRepository.save(currentUser);
 
         return "User's password was updated.";
@@ -69,4 +77,14 @@ public class UserService {
             throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
         }
     };
+
+    public void verificaUsuarioLogado(Long id){
+        UserSecurity userSecurity = UserSecurityService.authenticate();
+
+        if(
+            userSecurity == null
+            || !userSecurity.hasRole(Roles.ADMIN)
+            && !id.equals(userSecurity.getId())
+        ) throw new AuthorizationException("Access denied");
+    }
 }
