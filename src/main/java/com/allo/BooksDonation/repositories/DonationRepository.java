@@ -21,7 +21,15 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
                     "\n" +
                     "WHERE LOWER(book_info.title) ~ LOWER( :author ) \n" +
                     "OR LOWER(categories.categories) ~ LOWER( :categories ) \n" +
-                    "OR LOWER(authors.authors) ~ LOWER( :title ) "
+                    "OR LOWER(authors.authors) ~ LOWER( :title )" +
+                    "ORDER BY (SELECT NULL)\n" +
+                    "OFFSET :page ROWS FETCH NEXT :length ROWS ONLY"
     )
-    List<Donation> findByBook(String author, String categories, String title);
+    List<Donation> findByBook(
+            String author,
+            String categories,
+            String title,
+            Long page,
+            Long length
+    );
 }

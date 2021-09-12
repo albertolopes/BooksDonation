@@ -31,6 +31,9 @@ public class DonationService {
 
     public DonateStatus changeStatus(Long idDonation, String status) {
         Donation donation = repository.findById(idDonation).orElseThrow(() -> new ObjectNotFoundException("Donation not found."));
+
+        UserSecurityService.verificaUsuarioLogado(donation.getUser().getId());
+
         donation.setStatus(DonateStatus.valueOf(status));
         repository.save(donation);
         return donation.getStatus();
@@ -41,7 +44,7 @@ public class DonationService {
         return donationMapper.toDto(donation);
     }
 
-    public List<DonationDTO> findByBook(String author, String categories, String title) {
-        return donationMapper.toDto(repository.findByBook(author, categories, title));
+    public List<DonationDTO> findByBook(String author, String categories, String title, Long page, Long length) {
+        return donationMapper.toDto(repository.findByBook(author, categories, title, page, length));
     }
 }

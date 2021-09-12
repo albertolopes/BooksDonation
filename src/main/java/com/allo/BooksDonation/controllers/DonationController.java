@@ -39,12 +39,19 @@ public class DonationController {
     }
 
     @GetMapping("/filter/{author}/{categories}/{title}")
-    @ApiOperation("Find a donation by author")
+    @ApiOperation(
+            value = "Find a donation by author, category or title.",
+            notes= "You can use the variables page and length for pagination. " +
+                    "The variable page will be used to indicate the page, " +
+                    "and the variable length to indicate how much results to return in each page"
+    )
     public ResponseEntity<List<DonationDTO>> findByBook(
             @PathVariable String author,
             @PathVariable String categories,
-            @PathVariable String title
+            @PathVariable String title,
+            @PathVariable Long page,
+            @PathVariable Long length
     ){
-        return ResponseEntity.ok(service.findByBook(author, categories , title));
+        return ResponseEntity.ok(service.findByBook(author, categories , title, page, length));
     }
 }
