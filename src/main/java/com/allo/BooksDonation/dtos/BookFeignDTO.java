@@ -1,9 +1,7 @@
-package com.allo.BooksDonation.entities;
+package com.allo.BooksDonation.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
@@ -11,11 +9,11 @@ import java.util.List;
 @Setter
 @Getter
 @EqualsAndHashCode
-public class BookFeign {
+public class BookFeignDTO {
 
     private Long totalItems;
 
     private String kind;
 
-    private List<Book> items;
+    private List<BookDTO> items;
 }

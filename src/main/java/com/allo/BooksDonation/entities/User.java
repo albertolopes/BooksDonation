@@ -1,10 +1,13 @@
 package com.allo.BooksDonation.entities;
 
+import com.allo.BooksDonation.entities.enums.Roles;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -32,7 +35,9 @@ public class User {
     @Column(name = "PHONE")
     private String phone;
 
-    @OneToMany(mappedBy="id", fetch = FetchType.LAZY)
-    @Column(nullable = false)
-    private List<Adress> adress;
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "ID_ROLES"))
+    @Column(name = "roles", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Set<Roles> roles = new HashSet<>();
 }

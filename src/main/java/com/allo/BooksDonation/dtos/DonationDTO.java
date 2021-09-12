@@ -1,5 +1,6 @@
 package com.allo.BooksDonation.dtos;
 
+import com.allo.BooksDonation.entities.enums.DonateStatus;
 import lombok.*;
 import java.io.Serializable;
 
@@ -16,4 +17,6 @@ public class DonationDTO implements Serializable {
     private UserDTO user;
 
     private BookDTO book;
+
+    private DonateStatus status;
 }
