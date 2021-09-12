@@ -24,19 +24,22 @@ public class UserService {
     private BCryptPasswordEncoder bCrypt;
 
     public User findById(Long id) {
-
+        UserSecurityService.verificaUsuarioLogado(id);
         return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found."));
     }
 
     public User createUser(User user) {
+        user.setId(null);
         user.setPassword(bCrypt.encode(user.getPassword()));
         user.setRoles(Collections.singleton(Roles.USER));
+
         createUserValidation(user);
+
         return userRepository.save(user);
     }
 
     public User updateUser(User user) {
-        verificaUsuarioLogado(user.getId());
+        UserSecurityService.verificaUsuarioLogado(user.getId());
 
         updateUserValidation(user);
 
@@ -46,7 +49,7 @@ public class UserService {
     }
 
     public String updatePassword(UpdatePasswordDTO dto){
-        verificaUsuarioLogado(dto.getId());
+        UserSecurityService.verificaUsuarioLogado(dto.getId());
 
         User currentUser = findById(dto.getId());
 
@@ -76,15 +79,5 @@ public class UserService {
         if(email != null && email.getId() != user.getId()){
             throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
         }
-    };
-
-    public void verificaUsuarioLogado(Long id){
-        UserSecurity userSecurity = UserSecurityService.authenticate();
-
-        if(
-            userSecurity == null
-            || !userSecurity.hasRole(Roles.ADMIN)
-            && !id.equals(userSecurity.getId())
-        ) throw new AuthorizationException("Access denied");
     }
 }

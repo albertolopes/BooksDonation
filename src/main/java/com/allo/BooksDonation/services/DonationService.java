@@ -22,7 +22,9 @@ public class DonationService {
     @Transactional
     public DonationDTO createDonation(DonationDTO dto) {
         Donation donation = donationMapper.toEntity(dto);
+
         donation.setStatus(DonateStatus.ACTIVE);
+        donation.setId(null);
 
         return donationMapper.toDto(repository.save(donation));
     }

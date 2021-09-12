@@ -12,6 +12,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Getter
 @Setter
+@Builder
 public class ImageLinks {
 
     @Id

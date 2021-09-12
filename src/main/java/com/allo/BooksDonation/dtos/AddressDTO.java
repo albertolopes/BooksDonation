@@ -1,6 +1,5 @@
 package com.allo.BooksDonation.dtos;
 
-import com.allo.BooksDonation.entities.User;
 import lombok.*;
 
 import java.io.Serializable;
@@ -26,4 +25,6 @@ public class AddressDTO implements Serializable {
     private String localidade;
 
     private String uf;
+
+    private UserDTO user;
 }

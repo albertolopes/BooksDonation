@@ -54,6 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/donation/{idDonation}",
             "/donation/filter/{author}/{categories}/{title}",
+            "/book/integration/{description}",
+            "/address/integration/{cep}"
+
     };
 
     @Override

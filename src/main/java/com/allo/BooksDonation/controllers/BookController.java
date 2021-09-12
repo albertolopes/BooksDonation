@@ -18,7 +18,7 @@ public class BookController {
     @Autowired
     private BookService service;
 
-    @GetMapping("/{description}")
+    @GetMapping("/integration/{description}")
     @ApiOperation("Find a book for any description")
     public ResponseEntity<BookFeignDTO> searchBook(@PathVariable String description){
         return ResponseEntity.ok(service.searchBook(description));

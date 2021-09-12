@@ -35,10 +35,6 @@ public class User {
     @Column(name = "PHONE")
     private String phone;
 
-    @OneToMany(mappedBy="id", fetch = FetchType.LAZY)
-    @Column(nullable = false)
-    private List<Address> adress;
-
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "ID_ROLES"))
     @Column(name = "roles", nullable = false)
