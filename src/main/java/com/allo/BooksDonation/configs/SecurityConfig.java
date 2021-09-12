@@ -3,7 +3,6 @@ package com.allo.BooksDonation.configs;
 import com.allo.BooksDonation.security.JWTAuthenticationFilter;
 import com.allo.BooksDonation.security.JWTAuthorizationFilter;
 import com.allo.BooksDonation.security.JWTUtil;
-import org.hibernate.annotations.SortNatural;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,8 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/configuration/security",
             "/swagger-ui.html",
-            "/webjars/**",
-            "/user/**"
+            "/webjars/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
