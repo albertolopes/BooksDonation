@@ -30,7 +30,7 @@ public class Donation {
         timezone = "GMT"
     )
     @Column(name ="CREATE_DATE")
-    private Instant date;
+    private Instant lastDateUpdated;
 
     @ManyToOne
     @JoinColumn(name="ID_USER")

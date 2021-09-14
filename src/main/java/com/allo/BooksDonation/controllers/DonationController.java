@@ -25,6 +25,12 @@ public class DonationController {
         return ResponseEntity.ok(service.createDonation(donation));
     }
 
+    @PutMapping
+    @ApiOperation("Update a donation")
+    public ResponseEntity<DonationDTO> updateDonation(@RequestBody DonationDTO donation){
+        return ResponseEntity.ok(service.updateDonation(donation));
+    }
+
     @PutMapping("/{idDonation}/{status}")
     @ApiOperation("Change donation status")
     public ResponseEntity<DonateStatus> changeStatus(@PathVariable Long idDonation, @PathVariable String status){

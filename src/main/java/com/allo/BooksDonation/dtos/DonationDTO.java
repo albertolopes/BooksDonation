@@ -15,7 +15,7 @@ public class DonationDTO implements Serializable {
 
     private Long id;
 
-    private Instant date;
+    private Instant lastDateUpdated;
 
     private UserDTO user;
 
