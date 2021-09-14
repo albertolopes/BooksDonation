@@ -52,6 +52,7 @@ create table donation (
     status integer,
     book_id bigint not null,
     id_user bigint not null,
+    create_date timestamp,
     primary key (id_donation)
 );
 
