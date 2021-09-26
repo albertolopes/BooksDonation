@@ -1,10 +1,11 @@
 package com.allo.BooksDonation.entities;
 
 import com.allo.BooksDonation.entities.enums.DonateStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @NoArgsConstructor
@@ -13,8 +14,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @Builder
-public class Donation implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Donation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,14 @@ public class Donation implements Serializable {
 
     @Column(name = "STATUS")
     private DonateStatus status;
+
+    @JsonFormat(
+        shape = JsonFormat.Shape.STRING,
+        pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",
+        timezone = "GMT"
+    )
+    @Column(name ="CREATE_DATE")
+    private Instant lastDateUpdated;
 
     @ManyToOne
     @JoinColumn(name="ID_USER")

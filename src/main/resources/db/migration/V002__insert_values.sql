@@ -43,11 +43,11 @@ values (
     1
 );
 
-insert into donation (id_donation, status, book_id, id_user)
-values (0, 2, 1, 1);
+insert into donation (id_donation, status, book_id, id_user, create_date)
+values (0, 2, 1, 1, NOW());
 
 insert into authors (id_authors, authors)
-values (1, 'Douglas Adams');
+values (0, 'Douglas Adams');
 
 insert into categories (id_categories, categories)
-values (1, 'Fiction');
+values (0, 'Fiction');

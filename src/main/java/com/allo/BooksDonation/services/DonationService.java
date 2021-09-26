@@ -10,7 +10,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.List;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 @Service
 @AllArgsConstructor
@@ -22,11 +25,23 @@ public class DonationService {
     @Transactional
     public DonationDTO createDonation(DonationDTO dto) {
         Donation donation = donationMapper.toEntity(dto);
+        donation.setLastDateUpdated(Instant.now());
 
         donation.setStatus(DonateStatus.ACTIVE);
         donation.setId(null);
 
         return donationMapper.toDto(repository.save(donation));
+    }
+
+    @Transactional
+    public DonationDTO updateDonation(DonationDTO dto) {
+        Donation donation = donationMapper.toEntity(dto);
+        donation.setLastDateUpdated(Instant.now());
+
+        donation.setStatus(DonateStatus.ACTIVE);
+
+        return donationMapper.toDto(repository.save(donation));
+
     }
 
     public DonateStatus changeStatus(Long idDonation, String status) {
@@ -45,6 +60,13 @@ public class DonationService {
     }
 
     public List<DonationDTO> findByBook(String author, String categories, String title, Long page, Long length) {
-        return donationMapper.toDto(repository.findByBook(author, categories, title, page, length));
+
+        return donationMapper.toDto(repository.findByBook(
+                !isNullOrEmpty(author)? author : "",
+                !isNullOrEmpty(categories) ? categories : "",
+                !isNullOrEmpty(title) ? title : "",
+                page!= null ? page : 0,
+                length != null ? length : 0
+        ));
     }
 }

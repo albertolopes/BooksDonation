@@ -1,7 +1,6 @@
 package com.allo.BooksDonation.controllers;
 
 import com.allo.BooksDonation.dtos.DonationDTO;
-import com.allo.BooksDonation.entities.Donation;
 import com.allo.BooksDonation.entities.enums.DonateStatus;
 import com.allo.BooksDonation.services.DonationService;
 import io.swagger.annotations.Api;
@@ -26,6 +25,12 @@ public class DonationController {
         return ResponseEntity.ok(service.createDonation(donation));
     }
 
+    @PutMapping
+    @ApiOperation("Update a donation")
+    public ResponseEntity<DonationDTO> updateDonation(@RequestBody DonationDTO donation){
+        return ResponseEntity.ok(service.updateDonation(donation));
+    }
+
     @PutMapping("/{idDonation}/{status}")
     @ApiOperation("Change donation status")
     public ResponseEntity<DonateStatus> changeStatus(@PathVariable Long idDonation, @PathVariable String status){
@@ -38,7 +43,7 @@ public class DonationController {
         return ResponseEntity.ok(service.findADonarion(idDonation));
     }
 
-    @GetMapping("/filter/{author}/{categories}/{title}")
+    @GetMapping("/filter")
     @ApiOperation(
             value = "Find a donation by author, category or title.",
             notes= "You can use the variables page and length for pagination. " +
@@ -46,11 +51,11 @@ public class DonationController {
                     "and the variable length to indicate how much results to return in each page"
     )
     public ResponseEntity<List<DonationDTO>> findByBook(
-            @PathVariable String author,
-            @PathVariable String categories,
-            @PathVariable String title,
-            @PathVariable Long page,
-            @PathVariable Long length
+            @RequestParam(required=false) String author,
+            @RequestParam(required=false) String categories,
+            @RequestParam(required=false) String title,
+            @RequestParam Long page,
+            @RequestParam Long length
     ){
         return ResponseEntity.ok(service.findByBook(author, categories , title, page, length));
     }
