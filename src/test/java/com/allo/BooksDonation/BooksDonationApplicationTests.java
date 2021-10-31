@@ -1,4 +1,4 @@
-package com.allo.BooksDonation;
+package com.allo.booksdonation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
