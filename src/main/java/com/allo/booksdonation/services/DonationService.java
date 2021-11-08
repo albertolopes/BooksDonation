@@ -40,6 +40,8 @@ public class DonationService {
     private static final String INFO_LINK = "infoLink";
     private static final String CANONICAL_VOLUME_LINK = "canonicalVolumeLink";
     private static final String TEXT_SNIPPET = "textSnippet";
+    private static final String AUTHORS = "authors";
+    private static final String CATEGORIES = "categories";
 
     private final DonationRepository repository;
     private final DonationMapper donationMapper;
@@ -84,7 +86,7 @@ public class DonationService {
         return donationMapper.toDto(donation);
     }
 
-    public Object findByBook(FilterDonationsDTO dto, PageRequest pageRequest) {
+    public Page<ContentsDonationsDTO> findByBook(FilterDonationsDTO dto, PageRequest pageRequest) {
         return specFindByBook(dto, pageRequest);
     }
 
@@ -97,6 +99,7 @@ public class DonationService {
         joinBook.on(builder.equal(root.get(BOOK_ID), joinBook.get(ID)));
 
         List<Predicate> predicates = defautDonationPredicates(dto, builder, joinBook);
+
         criteria
             .multiselect(
                 root.get(BOOK_ID).alias(BOOK_ID),
@@ -108,24 +111,17 @@ public class DonationService {
                 joinBook.get(PREVIEW_LINK).alias(PREVIEW_LINK),
                 joinBook.get(INFO_LINK).alias(INFO_LINK),
                 joinBook.get(CANONICAL_VOLUME_LINK).alias(CANONICAL_VOLUME_LINK),
-                joinBook.get(TEXT_SNIPPET).alias(TEXT_SNIPPET)
+                joinBook.get(TEXT_SNIPPET).alias(TEXT_SNIPPET),
+                joinBook.join(AUTHORS),
+                joinBook.join(CATEGORIES)
+
             )
             .where(predicates.toArray(new Predicate[0]));
 
         List<ContentsDonationsDTO> result = manager.createQuery(criteria).setFirstResult((int)
                 pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
 
-        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
-        Root<Book> booksRootCount = countQuery.from(Book.class);
-        Join<Book, BookInfo> joinBookCount = booksRootCount.join(VOLUME_INFO, JoinType.LEFT);
-        joinBook.on(builder.equal(booksRootCount.get(BOOK_ID), joinBookCount.get(ID)));
-        countQuery
-            .select(builder.count(booksRootCount))
-            .where(predicates.toArray(new Predicate[0]));
-
-        Long count = manager.createQuery(countQuery).getSingleResult();
-
-        return new PageImpl<>(result, pageable, count);
+        return new PageImpl<>(result, pageable, result.stream().count());
     }
 
     public List<Predicate> defautDonationPredicates(
@@ -136,11 +132,9 @@ public class DonationService {
         List<Predicate> predicates = new ArrayList<>();
 
         if(dto.getTitle() != null) predicates.add(builder.like(joinBook.get(TITLE), dto.getTitle() + "%"));
-        if(dto.getCategories() != null) predicates.add(builder.like(joinBook.get(PUBLISHER), dto.getCategories()  + "%"));
-        if(dto.getAuthor() != null) predicates.add(builder.like(joinBook.get(PUBLISHER_DATE), dto.getAuthor()  + "%"));
+        if(dto.getCategories() != null) predicates.add(builder.like(joinBook.join(CATEGORIES), dto.getCategories()  + "%"));
+        if(dto.getAuthor() != null) predicates.add(builder.like(joinBook.join(AUTHORS), dto.getAuthor()  + "%"));
 
         return predicates;
     }
-
-
 }
