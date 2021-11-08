@@ -1,5 +1,6 @@
 package com.allo.booksdonation.controllers;
 
+import com.allo.booksdonation.dtos.ContentsDonationsDTO;
 import com.allo.booksdonation.dtos.DonationDTO;
 import com.allo.booksdonation.dtos.FilterDonationsDTO;
 import com.allo.booksdonation.entities.enums.DonateStatus;
@@ -8,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,7 @@ public class DonationController {
                     "The variable page will be used to indicate the page, " +
                     "and the variable length to indicate how much results to return in each page"
     )
-    public ResponseEntity<Object> findByBook(
+    public ResponseEntity<Page<ContentsDonationsDTO>> findByBook(
             @RequestParam(required=false) String author,
             @RequestParam(required=false) String categories,
             @RequestParam(required=false) String title,

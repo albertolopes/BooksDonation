@@ -30,4 +30,8 @@ public class ContentsDonationsDTO {
     private String canonicalVolumeLink;
 
     private String textSnippet;
+
+    private String authors;
+
+    private String categories;
 }
