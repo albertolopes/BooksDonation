@@ -3,11 +3,9 @@ package com.allo.booksdonation.services;
 import com.allo.booksdonation.dtos.UpdatePasswordDTO;
 import com.allo.booksdonation.entities.User;
 import com.allo.booksdonation.entities.enums.Roles;
-import com.allo.booksdonation.exceptions.AuthorizationException;
 import com.allo.booksdonation.exceptions.ObjectAlreadyExistsException;
 import com.allo.booksdonation.exceptions.ObjectNotFoundException;
 import com.allo.booksdonation.repositories.UserRepository;
-import com.allo.booksdonation.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,16 +65,16 @@ public class UserService {
         if(userRepository.findByEmail(user.getEmail()) != null){
             throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
         }
-    };
+    }
 
     public void updateUserValidation(User user){
         User username = userRepository.findByUsername(user.getUsername());
-        if(username != null && username.getId() != user.getId()){
+        if(username != null && username.getId().equals(user.getId())){
             throw new ObjectAlreadyExistsException("User already exists. User: " + user.getUsername());
         }
 
         User email = userRepository.findByEmail(user.getEmail());
-        if(email != null && email.getId() != user.getId()){
+        if(email != null && email.getId().equals(user.getId())){
             throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
         }
     }
