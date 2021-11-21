@@ -17,7 +17,7 @@ public class UserSecurityService {
        return (UserSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public static void verificaUsuarioLogado(Long id){
+    public static void verifyUserLogged(Long id){
         UserSecurity userSecurity = authenticate();
 
         if(

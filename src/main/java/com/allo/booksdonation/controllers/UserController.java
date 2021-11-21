@@ -34,6 +34,12 @@ public class UserController {
         return ResponseEntity.ok(mapper.toDto(userService.findById(id)));
     }
 
+    @GetMapping("/authenticated")
+    @ApiOperation("Find user authenticated")
+    public ResponseEntity<UserDTO> findByUserAuthenticated(){
+        return ResponseEntity.ok(mapper.toDto(userService.findByUserAuthenticated()));
+    }
+
     @PostMapping
     @ApiOperation("Create an user")
     public ResponseEntity<CreateUserDTO> createUser(@RequestBody CreateUserDTO dto){

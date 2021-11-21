@@ -11,5 +11,7 @@ public class UpdatePasswordDTO {
 
     private Long id;
 
-    private String password;
+    private String currentPassword;
+
+    private String newPassword;
 }

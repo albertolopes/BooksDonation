@@ -3,6 +3,7 @@ package com.allo.booksdonation.services;
 import com.allo.booksdonation.dtos.UpdatePasswordDTO;
 import com.allo.booksdonation.entities.User;
 import com.allo.booksdonation.entities.enums.Roles;
+import com.allo.booksdonation.exceptions.DataIntegrityException;
 import com.allo.booksdonation.exceptions.ObjectAlreadyExistsException;
 import com.allo.booksdonation.exceptions.ObjectNotFoundException;
 import com.allo.booksdonation.repositories.UserRepository;
@@ -22,8 +23,14 @@ public class UserService {
     private BCryptPasswordEncoder bCrypt;
 
     public User findById(Long id) {
-        UserSecurityService.verificaUsuarioLogado(id);
+        UserSecurityService.verifyUserLogged(id);
         return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found."));
+    }
+
+    public User findByUserAuthenticated(){
+        return userRepository.findById(
+                UserSecurityService.authenticate().getId()
+        ).orElseThrow(() -> new ObjectNotFoundException("User not found."));
     }
 
     public User createUser(User user) {
@@ -37,45 +44,41 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        UserSecurityService.verificaUsuarioLogado(user.getId());
-
+        UserSecurityService.verifyUserLogged(user.getId());
         updateUserValidation(user);
-
         user.setPassword(findById(user.getId()).getPassword());
 
         return userRepository.save(user);
     }
 
     public String updatePassword(UpdatePasswordDTO dto){
-        UserSecurityService.verificaUsuarioLogado(dto.getId());
-
+        UserSecurityService.verifyUserLogged(dto.getId());
         User currentUser = findById(dto.getId());
 
-        currentUser.setPassword(bCrypt.encode(dto.getPassword()));
-        userRepository.save(currentUser);
+        if(bCrypt.matches(dto.getCurrentPassword(), currentUser.getPassword())){
+            currentUser.setPassword(bCrypt.encode(dto.getNewPassword()));
+            userRepository.save(currentUser);
+            return "User's password was updated.";
+        }
 
-        return "User's password was updated.";
+        throw new DataIntegrityException("User's password was not updated.");
     }
 
     public void createUserValidation(User user){
-        if(userRepository.findByUsername(user.getUsername()) != null){
+        if(userRepository.findByUsername(user.getUsername()) != null)
             throw new ObjectAlreadyExistsException("User already exists. User: " + user.getUsername());
-        }
 
-        if(userRepository.findByEmail(user.getEmail()) != null){
+        if(userRepository.findByEmail(user.getEmail()) != null)
             throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
-        }
     }
 
     public void updateUserValidation(User user){
         User username = userRepository.findByUsername(user.getUsername());
-        if(username != null && username.getId().equals(user.getId())){
+        if(username != null && username.getId().equals(user.getId()))
             throw new ObjectAlreadyExistsException("User already exists. User: " + user.getUsername());
-        }
 
         User email = userRepository.findByEmail(user.getEmail());
-        if(email != null && email.getId().equals(user.getId())){
+        if(email != null && email.getId().equals(user.getId()))
             throw new ObjectAlreadyExistsException("Email already exists. Email: " + user.getEmail());
-        }
     }
 }

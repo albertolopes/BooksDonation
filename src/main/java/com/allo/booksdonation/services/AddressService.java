@@ -25,12 +25,12 @@ public class AddressService {
     }
 
     public Address createOrUpdateAddress(Address address) {
-        UserSecurityService.verificaUsuarioLogado(address.getUser().getId());
+        UserSecurityService.verifyUserLogged(address.getUser().getId());
         return addressRepository.save(address);
     }
 
     public void deleteAddress(Address address) {
-        UserSecurityService.verificaUsuarioLogado(address.getUser().getId());
+        UserSecurityService.verifyUserLogged(address.getUser().getId());
         addressRepository.deleteById(address.getId());
     }
 }

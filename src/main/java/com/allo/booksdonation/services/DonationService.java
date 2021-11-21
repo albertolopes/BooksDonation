@@ -74,7 +74,7 @@ public class DonationService {
     public DonateStatus changeStatus(Long idDonation, String status) {
         Donation donation = repository.findById(idDonation).orElseThrow(() -> new ObjectNotFoundException("Donation not found."));
 
-        UserSecurityService.verificaUsuarioLogado(donation.getUser().getId());
+        UserSecurityService.verifyUserLogged(donation.getUser().getId());
 
         donation.setStatus(DonateStatus.valueOf(status));
         repository.save(donation);
