@@ -24,12 +24,7 @@ public class AddressService {
         return addressRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Address was not found"));
     }
 
-    public Address createAddress(Address address) {
-        UserSecurityService.verificaUsuarioLogado(address.getUser().getId());
-        return addressRepository.save(address);
-    }
-
-    public Address updateAddress(Address address) {
+    public Address createOrUpdateAddress(Address address) {
         UserSecurityService.verificaUsuarioLogado(address.getUser().getId());
         return addressRepository.save(address);
     }

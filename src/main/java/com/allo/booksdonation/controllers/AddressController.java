@@ -34,13 +34,13 @@ public class AddressController {
     @PostMapping
     @ApiOperation("Create a new address")
     public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO dto){
-        return ResponseEntity.ok(mapper.toDto(service.createAddress(mapper.toEntity(dto))));
+        return ResponseEntity.ok(mapper.toDto(service.createOrUpdateAddress(mapper.toEntity(dto))));
     }
 
     @PutMapping
     @ApiOperation("Update an address")
     public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO dto){
-        return ResponseEntity.ok(mapper.toDto(service.updateAddress(mapper.toEntity(dto))));
+        return ResponseEntity.ok(mapper.toDto(service.createOrUpdateAddress(mapper.toEntity(dto))));
     }
 
     @DeleteMapping

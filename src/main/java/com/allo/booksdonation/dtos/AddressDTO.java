@@ -2,17 +2,14 @@ package com.allo.booksdonation.dtos;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class AddressDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class AddressDTO {
 
-    private Long Id;
+    private Long id;
 
     private String cep;
 

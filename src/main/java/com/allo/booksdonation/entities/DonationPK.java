@@ -3,7 +3,6 @@ package com.allo.booksdonation.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Embeddable
 
@@ -12,8 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class DonationPK implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class DonationPK {
 
     @ManyToOne
     @JoinColumn(name="ID_USER")

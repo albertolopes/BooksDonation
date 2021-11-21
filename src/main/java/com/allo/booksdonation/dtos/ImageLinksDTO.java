@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EqualsAndHashCode
 public class ImageLinksDTO {
 
     private Long id;
@@ -14,6 +13,4 @@ public class ImageLinksDTO {
     private String smallThumbnail;
 
     private String thumbnail;
-
-    //private Book book;
 }

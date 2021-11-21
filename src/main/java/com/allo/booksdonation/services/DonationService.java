@@ -93,8 +93,8 @@ public class DonationService {
     public Page<ContentsDonationsDTO> specFindByBook(FilterDonationsDTO dto, PageRequest pageable){
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<ContentsDonationsDTO> criteria = builder.createQuery(ContentsDonationsDTO.class);
-        Root<Book> root = criteria.from(Book.class);
 
+        Root<Book> root = criteria.from(Book.class);
         Join<Book, BookInfo> joinBook = root.join(VOLUME_INFO, JoinType.LEFT);
         joinBook.on(builder.equal(root.get(BOOK_ID), joinBook.get(ID)));
 
@@ -114,7 +114,6 @@ public class DonationService {
                 joinBook.get(TEXT_SNIPPET).alias(TEXT_SNIPPET),
                 joinBook.join(AUTHORS),
                 joinBook.join(CATEGORIES)
-
             )
             .where(predicates.toArray(new Predicate[0]));
 

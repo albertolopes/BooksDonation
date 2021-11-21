@@ -3,7 +3,6 @@ package com.allo.booksdonation.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Getter
@@ -12,8 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class Book implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

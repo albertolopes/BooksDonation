@@ -2,15 +2,12 @@ package com.allo.booksdonation.dtos;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class UserDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class UserDTO {
 
     private Long id;
 
